@@ -271,10 +271,16 @@ def prin():
     ventana.config(bg="lime")
     ventana.title("Inicio de sesión")
     ventana.configure(padx=50)
-
+    
+    texto=tk.Label(ventana,text="Nombre de usuario:",bg="lime")
+    texto.pack()
+    
     nombre_usuario = tk.Entry(ventana)
     nombre_usuario.config(bg="yellow")
     nombre_usuario.pack(pady=10)
+    
+    texto1=tk.Label(ventana,text="Contraseña:",bg="lime")
+    texto1.pack()
     contrasena_usuario = tk.Entry(ventana, show="*")
     contrasena_usuario.config(bg="yellow")
     contrasena_usuario.pack()
