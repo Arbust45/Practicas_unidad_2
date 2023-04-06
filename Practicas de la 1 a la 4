@@ -1,0 +1,296 @@
+import tkinter as tk
+import sqlite3
+from tkinter import messagebox
+c=0
+
+conexion = sqlite3.connect("base.db")
+#Practica 3 base de datos, se crean dos tablas contrasena y usuario, en la base de datos llamada base
+conexion.execute("""create table if not exists contrasena(
+                    id integer primary key AUTOINCREMENT,
+                    contrasena varchar
+                    )""")
+conexion.execute("""create table if not exists usuario(
+                    id integer primary key AUTOINCREMENT,
+                    usuario varchar
+                    )""")
+
+class MenuScreen(tk.Frame):
+    
+    def __init__(self, master):
+        super().__init__(master)
+        self.master = master
+        self.master.configure(bg="red")
+        self.master.title("Inicio")
+        
+        self.menu_bar = tk.Menu(self.master)
+        self.master.config(menu=self.menu_bar)
+        self.config(bg="red")
+        #se crea una barra de menu que tiene la funcion de salir
+        self.file_menu = tk.Menu(self.menu_bar, tearoff=0)
+        self.menu_bar.add_cascade(label="Salir", command=self.quit_program,background="orange")
+        
+        #se crea una barra de menu donde al seleccionar editar interfaz se despliegan varias opciones de perzonalizacion para la ventana
+        self.edit_menu = tk.Menu(self.menu_bar, tearoff=0)
+        self.edit_menu.add_command(label="Rojo",command=self.Rojo,background="Red")
+        self.edit_menu.add_command(label="Marino", command=self.copy,background="teal")
+        self.edit_menu.add_command(label="Azul", command=self.paste,background="blue")
+        self.edit_menu.add_command(label="Verde",command=self.green,background="green")
+        self.edit_menu.add_command(label="Indigo",command=self.indigo,background="Indigo")
+        self.edit_menu.add_command(label="Brillo",command=self.Oro,background="Gold")
+        self.edit_menu.add_command(label="Cafe",command=self.Cafe,background="Chocolate")
+        self.edit_menu.add_command(label="Oscuro",command=self.Negro,background="Black",foreground="light Grey")
+        self.menu_bar.add_cascade(label="Editar interfaz", menu=self.edit_menu,background="orange")
+
+
+        self.label = tk.Label(self, text="¡Buenos dias "+nombre_usuario.get()+"!",fg="orange" ,bg="red")
+        self.label.pack(pady=10)
+        self.button = tk.Button(self, text="Iniciar", command=self.press_button,fg="red",bg="orange")
+        self.button.pack(pady=10)
+        self.pack()
+        self.button2=tk.Button(self, text="Situacion incomoda",command=self.press_button2,bg="orange",fg="red")
+        self.button2.pack(pady=30)
+        self.button3=tk.Button(self, text="Volver al menú",command=self.press_button3,bg="orange",fg="red")
+        self.button3.pack(pady=10)
+    
+    def quit_program(self):
+        self.master.quit()
+
+    def Rojo(self):
+        self.master.configure(bg="red")
+        self.config(bg="red")
+        self.label.config(bg="red",fg="orange")
+        self.button.config(bg="orange",fg="red")
+        self.button2.config(bg="orange",fg="red")
+        self.button3.config(bg="orange",fg="red")
+
+    def copy(self):
+        self.master.configure(bg="teal")
+        self.config(bg="teal")
+        self.label.config(bg="teal",fg="navy")
+        self.button.config(bg="navy",fg="teal")
+        self.button2.config(bg="navy",fg="teal")
+        self.button3.config(bg="navy",fg="teal")  
+        
+    def paste(self):
+        self.master.configure(bg="blue")
+        self.config(bg="blue")
+        self.label.config(bg="blue",fg="cyan")
+        self.button.config(bg="cyan",fg="blue")
+        self.button2.config(bg="cyan",fg="blue")
+        self.button3.config(bg="cyan",fg="blue")
+    
+    def green(self):
+        self.master.configure(bg="lime")
+        self.config(bg="lime")
+        self.label.config(bg="lime",fg="green")
+        self.button.config(bg="green",fg="lime")
+        self.button2.config(bg="green",fg="lime")
+        self.button3.config(bg="green",fg="lime")
+    
+    def indigo(self):
+        self.master.configure(bg="indigo")
+        self.config(bg="indigo")
+        self.label.config(bg="indigo",fg="plum")
+        self.button.config(bg="plum",fg="indigo")
+        self.button2.config(bg="plum",fg="indigo")
+        self.button3.config(bg="plum",fg="indigo")    
+    def Oro(self):
+        self.master.configure(bg="Gold")
+        self.config(bg="Gold")
+        self.label.config(bg="Gold",fg="Silver")
+        self.button.config(bg="Silver",fg="Gold")
+        self.button2.config(bg="Silver",fg="Gold")
+        self.button3.config(bg="Silver",fg="Gold")
+    def Cafe(self):
+        self.master.configure(bg="chocolate")
+        self.config(bg="chocolate")
+        self.label.config(bg="chocolate",fg="ivory")
+        self.button.config(bg="ivory",fg="chocolate")
+        self.button2.config(bg="ivory",fg="chocolate")
+        self.button3.config(bg="ivory",fg="chocolate")
+    def Negro(self):
+        self.master.configure(bg="black")
+        self.config(bg="black")
+        self.label.config(bg="black",fg="grey")
+        self.button.config(bg="grey",fg="black")
+        self.button2.config(bg="grey",fg="black")
+        self.button3.config(bg="grey",fg="black") 
+
+    def press_button(self):
+        root.withdraw()
+        Calculadora()
+
+    def press_button2(self):
+        global c
+        c=c+1
+        
+        if c==1:
+            self.master.configure(bg="teal")
+            self.config(bg="teal")
+            self.label.config(bg="teal",fg="navy")
+            self.button.config(bg="navy",fg="teal")
+            self.button2.config(bg="navy",fg="teal")
+            self.button3.config(bg="navy",fg="teal")                    
+        if c==2:
+            self.master.configure(bg="blue")
+            self.config(bg="blue")
+            self.label.config(bg="blue",fg="cyan")
+            self.button.config(bg="cyan",fg="blue")
+            self.button2.config(bg="cyan",fg="blue")
+            self.button3.config(bg="cyan",fg="blue")
+        if c==3:
+            self.master.configure(bg="lime")
+            self.config(bg="lime")
+            self.label.config(bg="lime",fg="green")
+            self.button.config(bg="green",fg="lime")
+            self.button2.config(bg="green",fg="lime")
+            self.button3.config(bg="green",fg="lime")
+        
+        if c==4:
+            self.master.configure(bg="indigo")
+            self.config(bg="indigo")
+            self.label.config(bg="indigo",fg="plum")
+            self.button.config(bg="plum",fg="indigo")
+            self.button2.config(bg="plum",fg="indigo")
+            self.button3.config(bg="plum",fg="indigo")
+        if c==5:
+            self.master.configure(bg="Gold")
+            self.config(bg="Gold")
+            self.label.config(bg="Gold",fg="Silver")
+            self.button.config(bg="Silver",fg="Gold")
+            self.button2.config(bg="Silver",fg="Gold")
+            self.button3.config(bg="Silver",fg="Gold")
+        if c==6:
+            self.master.configure(bg="chocolate")
+            self.config(bg="chocolate")
+            self.label.config(bg="chocolate",fg="ivory")
+            self.button.config(bg="ivory",fg="chocolate")
+            self.button2.config(bg="ivory",fg="chocolate")
+            self.button3.config(bg="ivory",fg="chocolate")
+        if c==7:
+            self.master.configure(bg="black")
+            self.config(bg="black")
+            self.label.config(bg="black",fg="grey")
+            self.button.config(bg="grey",fg="black")
+            self.button2.config(bg="grey",fg="black")
+            self.button3.config(bg="grey",fg="black") 
+        if c==0 or c==8:
+            self.master.configure(bg="red")
+            self.config(bg="red")
+            self.label.config(bg="red",fg="orange")
+            self.button.config(bg="orange",fg="red")
+            self.button2.config(bg="orange",fg="red")
+            self.button3.config(bg="orange",fg="red")
+            c=0
+    
+    def press_button3(self):
+       root.withdraw()
+       prin()
+
+#Se crea una funcion donde se despliega una ventana con las opciones de sumar, restar y multiplicar dos numeros
+def Calculadora():
+    def suma():
+        x=int(num1.get())+int(num2.get())
+        messagebox.showinfo(title="resultado",message="la suma de "+num1.get()+" y "+num2.get()+" es "+str(x))
+    def resta():
+        x=int(num1.get())-int(num2.get())
+        messagebox.showinfo(title="resultado",message="la suma de "+num1.get()+" y "+num2.get()+" es "+str(x))
+    def multi():
+        x=int(num1.get())*int(num2.get())
+        messagebox.showinfo(title="resultado",message="la multiplicación de "+num1.get()+" y "+num2.get()+" es "+str(x))
+    def return_():
+        venta.withdraw()
+        prin()
+        
+    venta=tk.Tk()
+    venta.title("Calculadora")
+    venta.geometry("300x200")
+    venta.config(bg="light green")
+    text1=tk.Label(venta,text="Ingrese un numero",bg="light green",fg="green")
+    text1.pack()
+    num1=tk.Entry(venta,bg="light blue",fg="blue")
+    num1.pack()
+    text2=tk.Label(venta,text="Ingrese un numero",bg="light green",fg="green")
+    text2.pack()
+    num2=tk.Entry(venta,bg="light blue",fg="blue")
+    num2.pack()
+    boton1=tk.Button(venta)
+    boton1.config(text="Suma",bg="teal",command=suma)
+    boton1.pack()
+    boton15=tk.Button(venta)
+    boton15.config(text="Resta",bg="teal",command=resta)
+    boton15.pack()
+    boton2=tk.Button(venta)
+    boton2.config(text="Multiplicación",bg="teal",command=multi)
+    boton2.pack()
+    boton3=tk.Button(venta)
+    boton3.config(text="Cerrar sesion",bg="teal",command=return_)
+    boton3.pack()
+    
+
+#Practica 4 registro en base de datos, inserta el usuario y contraseña en las tablas usuario y contrasena respectivamente
+def Registrarse():
+    
+    usuario=nombre_usuario.get()
+    contrasena=contrasena_usuario.get()
+    conexion.execute("Insert into usuario(usuario) values(?)",(usuario,))
+    conexion.execute("Insert into contrasena(contrasena) values(?)",(contrasena,))
+    conexion.commit()
+    resultado.config(text="el registro ha sido exitoso")
+
+#Practica 1 inicio de sesion a base de un usuario y contraseña creada por el usuario
+def iniciarSesion():
+    
+    usuario = nombre_usuario.get()
+    contrasena = contrasena_usuario.get()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT usuario, contrasena FROM usuario JOIN contrasena ON usuario.id = contrasena.id WHERE usuario.usuario = ?", (usuario,))
+    resultado_db = cursor.fetchone()
+    
+    if resultado_db and resultado_db[1] == contrasena:
+        #si el inicio de sesion es exitoso pasando a la practica 2, cerrando la ventana del inicio de sesion y registro
+        global root
+        ventana.withdraw()
+        resultado.config(text="Inicio de sesión exitoso")
+        root = tk.Tk()
+        root.geometry("420x380")
+        app = MenuScreen(root)
+
+    else:
+        #mensaje de error si el inicio de sesion no es correcto
+        messagebox.showerror(title="error",message="Usuario no registrado")
+
+#Ventana principal donde se lleva acabo la practica 1 y 4 (inicio de sesion por contraseña y registro en una base de datos)
+def prin():
+    global ventana
+    global resultado
+    global nombre_usuario
+    global contrasena_usuario
+    
+    ventana = tk.Tk()
+    ventana.config(bg="lime")
+    ventana.title("Inicio de sesión")
+    ventana.configure(padx=50)
+
+    nombre_usuario = tk.Entry(ventana)
+    nombre_usuario.config(bg="yellow")
+    nombre_usuario.pack(pady=10)
+    contrasena_usuario = tk.Entry(ventana, show="*")
+    contrasena_usuario.config(bg="yellow")
+    contrasena_usuario.pack()
+
+    iniciar_sesion = tk.Button(ventana, text="Iniciar sesión", command=iniciarSesion, bg="yellow")
+    iniciar_sesion.pack(padx=10, pady=10)
+    registrarse=tk.Button(ventana,text="Registrarse",command=Registrarse,bg="yellow")
+    registrarse.pack(padx=10,pady=11)
+
+    salir = tk.Button(ventana, text="Salir", command=ventana.quit)
+    salir.config(bg="yellow")
+    salir.pack()
+
+    resultado = tk.Label(ventana, text="")
+    resultado.config(bg="lime")
+    resultado.pack(pady=10)
+    ventana.mainloop()
+
+prin()
