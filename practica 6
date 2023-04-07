@@ -1,0 +1,76 @@
+import tkinter
+import mysql.connector
+from tkinter import messagebox
+from tkinter import ttk
+
+def inicio():
+    global resultado1
+    identificar = "SELECT usuario,folio FROM practica6 WHERE contraseña = %s"
+    
+    cursor.execute(identificar, (contraseña.get(),))
+    resultado = cursor.fetchone()
+
+    cursor.execute("SELECT * FROM practica6")
+    resultado1=cursor.fetchall()
+    
+    if resultado[0]==usuario.get():
+        ventana.withdraw()
+        datos()
+def datos():
+    
+    ventana2=tkinter.Tk()
+    ventana2.title("datos de los usuarios")
+    ventana2.geometry("350x200")
+    ventana2.resizable(0,0)
+    ventana2.config(bg="coral")
+    
+    tabla=ttk.Treeview(ventana2)
+    tabla['columns']=("usuario","folio","cosa favorita")
+    tabla.column('#0', width=0, stretch=tkinter.NO)
+    tabla.column('usuario',anchor=tkinter.CENTER, width=100)
+    tabla.column('folio',anchor=tkinter.CENTER, width=100)
+    tabla.column('cosa favorita',anchor=tkinter.CENTER, width=100)
+    
+    tabla.heading('#0', text='', anchor=tkinter.CENTER)
+    tabla.heading('usuario',text="Nombre",anchor=tkinter.CENTER)
+    tabla.heading('folio',text="Folio",anchor=tkinter.CENTER)
+    tabla.heading('cosa favorita',text="Favorito",anchor=tkinter.CENTER)
+    
+    for datos in resultado1:
+        tabla.insert(parent='',index='end',iid=datos[0],values=(datos[0],datos[2],datos[3]))
+        
+    tabla.pack()
+    
+def principal():
+    
+    global ventana
+    global cursor
+    global contraseña
+    global usuario
+
+    base= mysql.connector.connect(host="localhost",user="root",password="",database="practica6")
+    cursor=base.cursor()
+    cursor.execute("Select usuario,favorito from practica6")
+    resultado=cursor.fetchall()
+
+    ventana=tkinter.Tk()
+    ventana.config(bg="Olive")
+    ventana.title("Cosas que les gusta a los usuarios")
+
+    lb=tkinter.Label(ventana,text="Ingrese su nombre de usuario(un usuario registrado en la base de datos)",bg="olive")
+    lb.pack()
+
+    usuario=tkinter.Entry(ventana)
+    usuario.pack()
+
+    lb2=tkinter.Label(ventana,text="Ingrese su contraseña(la contraseña del usuario registrado en la base de datos)",bg="olive")
+    lb2.pack()
+
+    contraseña=tkinter.Entry(ventana,show="*")
+    contraseña.pack()
+
+    boton=tkinter.Button(ventana,text="iniciar sesion",bg="plum",command=inicio)
+    boton.pack()
+    ventana.mainloop()
+
+principal()
