@@ -1,0 +1,188 @@
+#juego?
+# import the modules 
+import tkinter
+import random
+
+# list of possible colour.
+colours = ['Red','Blue','Green','Pink','Black',
+           'Yellow','Orange','White','Purple','Brown']
+score = 0
+  
+# the game time left, initially 30 seconds.
+timeleft = 60
+  
+# function that will start the game.
+def startGame(event):
+    
+    if timeleft == 60:
+          
+        # start the countdown timer.
+        countdown()
+          
+    # run the function to
+    # choose the next colour.
+    nextColour()
+
+#Return at Practica_libre_unidad_2
+def volver():
+    root.withdraw()
+    from Practica_libre_unidad_2 import siguiente1
+    siguiente1()
+
+# Function to choose and
+# display the next colour.
+# translade the colors
+
+def colortranslade():
+    if colours[0]=="Red":
+        x="Rojo"
+    elif colours[0]=="Blue":
+        x="Azul"
+    elif colours[0]=="Green":
+        x="Verde"
+    elif colours[0]=="Pink":
+        x="Rosa"
+    elif colours[0]=="Black":
+        x="Negro"
+    elif colours[0]=="Yellow":
+        x="Amarillo"
+    elif colours[0]=="Orange":
+        x="Naranja"
+    elif colours[0]=="White":
+        x="Blanco"
+    elif colours[0]=="Purple":
+        x="Morado"
+    elif colours[0]=="Brown":
+        x="Marron"
+    return str(x)
+
+def colortranslade1():
+    if colours[1]=="Red":
+        y="Rojo"
+    elif colours[1]=="Blue":
+        y="Azul"
+    elif colours[1]=="Green":
+        y="Verde"
+    elif colours[1]=="Pink":
+        y="Rosa"
+    elif colours[1]=="Black":
+        y="Negro"
+    elif colours[1]=="Yellow":
+        y="Amarillo"
+    elif colours[1]=="Orange":
+        y="Naranja"
+    elif colours[1]=="White":
+        y="Blanco"
+    elif colours[1]=="Purple":
+        y="Morado"
+    elif colours[1]=="Brown":
+        y="Marron"
+    return str(y.lower())
+
+def nextColour():
+  
+    # use the globally declared 'score'
+    # and 'play' variables above.
+    global score
+    global timeleft
+  
+    # if a game is currently in play
+    if timeleft > 0:
+  
+        # make the text entry box active.
+        e.focus_set()
+  
+        # if the colour typed is equal
+        # to the colour of the text
+        if e.get().lower() == colortranslade1():
+              
+            score += 1
+  
+        # clear the text entry box.
+        e.delete(0, tkinter.END)
+          
+        random.shuffle(colours)
+        
+        # change the colour to type, by changing the
+        # text _and_ the colour to a random colour value
+        label.config(fg = str(colours[1]), text = colortranslade())
+          
+        # update the score.
+        scoreLabel.config(text = "Puntos: " + str(score))
+  
+  
+# Countdown timer function 
+def countdown():
+  
+    global timeleft
+  
+    # if a game is in play
+    if timeleft > 0:
+  
+        # decrement the timer.
+        timeleft -= 1
+          
+        # update the time left label
+        if timeleft > 5:
+            timeLabel.config(text = "Tiempo restante: "+ str(timeleft))
+        else:
+            timeLabel.config(text = "Tiempo restante: "+ str(timeleft),fg="red")   
+        # run the function again after 1 second.
+        timeLabel.after(1000, countdown)
+        
+    elif timeleft==0:
+        scoreLabel.config(fg="red")
+        e.forget()
+  
+def inici():
+# Driver Code
+# create a GUI window
+    global root
+    root = tkinter.Tk()
+  
+# set the title
+    root.title("JUEGO DE COLORES")
+  
+# set the size
+    root.geometry("375x200")
+  
+# add an instructions label
+    instructions = tkinter.Label(root, text = "Escribe el color con el que estan escritas las palabras",font = ('Helvetica', 10))
+    instructions.pack() 
+  
+# add a score label
+    global scoreLabel
+    scoreLabel = tkinter.Label(root, text = "Presiona enter",
+                                      font = ('Helvetica', 10))
+    scoreLabel.pack()
+  
+# add a time left label
+    global timeLabel
+    timeLabel = tkinter.Label(root, text = "Tiempo: " +
+              str(timeleft), font = ('Helvetica', 10))
+                
+    timeLabel.pack()
+  
+    # add a label for displaying the colours
+    global label
+    label = tkinter.Label(root, font = ('Helvetica', 50))
+    label.pack()
+  
+# add a text entry box for
+# typing in colours
+    global e
+    e = tkinter.Entry(root)
+  
+# run the 'startGame' function 
+# when the enter key is pressed
+    root.bind('<Return>', startGame)
+    e.pack()
+    button=tkinter.Button(root)
+    button.config(text="Cerrar sesion",command=volver)
+    button.pack(pady="10")
+# set focus on the entry box
+    e.focus_set()
+
+    root.resizable(0,0)
+# start the GUI
+    root.mainloop()
