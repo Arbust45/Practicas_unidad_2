@@ -1,0 +1,91 @@
+#Practica libre unidad 2_ventana 2
+import sqlite3
+import tkinter as tk
+
+
+conexion = sqlite3.connect("base_practica.db")
+
+conexion.execute("""create table if not exists datos(
+                    id integer primary key AUTOINCREMENT,
+                    usario varchar,
+                    contrasena varchar
+                    )""")
+
+conexion.execute("""create table if not exists d_adicionales(
+                    id integer primary key autoincrement,
+                    edad varchar,
+                    dia integer,
+                    mes integer,
+                    vueltas_al_sol integer
+                    )""")
+
+def instruccion_1():
+    global ventana
+    global edad
+    global dia
+    global mes
+    global año
+    usuario_=str(usuario.get())
+    contrasena_=str(contrasena.get())
+
+    conexion.execute("Insert into datos(usario,contrasena) values(?,?)",(usuario_,contrasena_,))
+    
+    ventana2.withdraw()
+    ventana=tk.Tk()
+    ventana.config(bg="blue")
+    text1=tk.Label(ventana,text="ingrese su edad:",bg="blue")
+    text1.pack()
+    edad=tk.Entry(ventana)
+    edad.pack()
+    text2=tk.Label(ventana,text="ingrese su dia de nacimiento:",bg="blue")
+    text2.pack()
+    dia=tk.Entry(ventana)
+    dia.pack()
+    text3=tk.Label(ventana,text="ingrese su mes de nacimiento:",background="blue")
+    text3.pack()
+    mes=tk.Entry(ventana)
+    mes.pack()
+    text4=tk.Label(ventana,text="ingrese su año de nacimiento:",bg="blue")
+    text4.pack()
+    año=tk.Entry(ventana)
+    año.pack()
+    text5=tk.Button(ventana,text="Listo",command=instruccion_2)
+    text5.pack()
+    ventana.mainloop
+
+def instruccion_2():
+
+    
+    conexion.execute("Insert into d_adicionales(edad,dia,mes,vueltas_al_sol) values(?,?,?,?)",(int(edad.get()),int(dia.get()),int(mes.get()),int(año.get()),))
+    conexion.commit()
+    
+    ventana.withdraw()
+    from ventana_para_practica_libre_1 import ventana_para_practica_libre_1
+    regresar=ventana_para_practica_libre_1()
+
+
+class registro():
+    global ventana2
+    global usuario
+    global contrasena
+    ventana2=tk.Tk()
+    ventana2.config(bg="green")
+    
+    text1=tk.Label(ventana2)
+    text1.config(text="ingrese su nombre de usuario:",bg="green")
+    text1.pack(pady="10")
+    
+    usuario=tk.Entry(ventana2)
+    usuario.pack()
+    text2=tk.Label(ventana2)
+    text2.config(text="ingrese su contraseña:",bg="green")
+    text2.pack(pady="10")
+    contrasena=tk.Entry(ventana2)
+    contrasena.pack()
+    text3=tk.Label(ventana2)
+    text3.config(bg="green")
+    text3.pack()
+    boton1=tk.Button(ventana2,bg="lime",fg="green",command=instruccion_1,text="continuar")
+    boton1.pack()
+    ventana2.mainloop()
+    
