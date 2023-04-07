@@ -1,0 +1,25 @@
+#ventana para practica libre 1
+import tkinter as tk
+
+def comando_b1():
+    ventana_prin.withdraw()
+    from Practica_libre_unidad_2 import inicio
+    inicio_sesion=inicio()
+
+def comando_b2():
+    ventana_prin.withdraw()
+    from Practica_libre_unidad_2_ventana_2 import registro
+    registro_=registro()
+
+ventana_prin=tk.Tk()
+ventana_prin.config(bg="violet",padx="100",pady="100")
+
+boton1_prin=tk.Button(ventana_prin)
+boton1_prin.config(bg="purple",text="Iniciar sesion",command=comando_b1)
+boton1_prin.pack()
+
+boton2_prin=tk.Button(ventana_prin)
+boton2_prin.config(bg="purple",text="Registrarse",command=comando_b2)
+boton2_prin.pack()
+
+ventana_prin.mainloop()
