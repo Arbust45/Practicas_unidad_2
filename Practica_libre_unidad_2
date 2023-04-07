@@ -1,0 +1,104 @@
+#Practica libre unidad 2
+
+import sqlite3
+import tkinter as tk
+from tkinter import messagebox
+c=0
+conexion = sqlite3.connect("base_practica.db")
+
+conexion.execute("""create table if not exists datos(
+                    id integer primary key AUTOINCREMENT,
+                    usario varchar,
+                    contrasena varchar
+                    )""")
+
+conexion.execute("""create table if not exists d_adicionales(
+                    id integer primary key autoincrement,
+                    edad varchar,
+                    dia integer,
+                    mes integer,
+                    vueltas_al_sol integer
+                    )""")
+def siguiente():
+    global ventana2
+    ventana3_.withdraw()
+    ventana2=tk.Tk()
+    ventana2.resizable(1,0)
+    ventana2.config(bg="lime")
+    text1=tk.Label(ventana2,text="datos del usuario",bg="lime")
+    text1.pack()
+    registros_lb = tk.Listbox(ventana2)
+    cursor=conexion.cursor()
+    cursor.execute("select * from datos, d_adicionales")
+    registros=cursor.fetchall()
+    for registro in registros:
+        registros_lb.insert(tk.END, registro)
+    registros_lb.pack()
+    
+    ventana2.mainloop()
+    
+def ret():
+    ventana3_.withdraw()
+
+def siguiente1():
+    usuario_ = usuario.get()
+    contraseña_ = contraseña.get()
+    cursor = conexion.cursor()
+    cursor.execute("SELECT * FROM datos WHERE usario = ? AND contrasena = ?", (usuario_, contraseña_))
+    registro = cursor.fetchone()
+        
+    if registro:
+        global ventana3_
+        ventana.withdraw()
+        ventana3_=tk.Tk()
+        ventana3_.title("Seleccion de fase")
+        ventana3_.geometry("230x150")
+        ventana3_.resizable(0,0)
+        ventana3_.config(background="Olive")
+        
+        text1_=tk.Label(ventana3_,text="Revisar datos de los usuarios registrados",bg="Olive")
+        text1_.pack(pady="10")
+        
+        boton_=tk.Button(ventana3_)
+        boton_.config(command=siguiente,bg="grey",fg="ivory",text="Siguiente")
+        boton_.pack()
+        
+        text2_=tk.Label(ventana3_,text="iniciar",bg="Olive")
+        text2_.pack()
+        
+        boton2_=tk.Button(ventana3_)
+        boton2_.config(command=siguiente2,bg="grey",fg="ivory",text="Siguiente")
+        boton2_.pack()
+        
+        boton3_=tk.Button(ventana3_)
+        boton3_.config(command=ret)
+        ventana3_.mainloop()
+    else:
+        messagebox.showerror("Inicio de sesión", "Usuario o contraseña incorrectos.")
+
+def siguiente2():
+    ventana3_.withdraw()
+    from juego_bajado_internet import inici
+    inici()
+
+class inicio():
+    global ventana
+    global usuario
+    global contraseña
+    ventana=tk.Tk()
+    ventana.config(bg="blue")
+    ventana.resizable(0,0)
+    text1=tk.Label(ventana,text="Ingrese su nombre de usuario:",bg="blue")
+    text1.pack()
+    usuario=tk.Entry(ventana)
+    usuario.pack()
+    text2=tk.Label(ventana,text="Ingrese su contraseña:",bg="blue")
+    text2.pack()
+    contraseña=tk.Entry(ventana,show="*")
+    contraseña.pack()
+    text3=tk.Label(ventana,bg="blue")
+    text3.pack()
+    boton2=tk.Button(ventana)
+    boton2.config(text="listo",bg="cyan",fg="blue",command=siguiente1)
+    boton2.pack()
+    ventana.mainloop()
